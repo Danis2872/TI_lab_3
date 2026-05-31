@@ -1,0 +1,132 @@
+<Window x:Class="RsaCryptoApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Шифратор/Дешифратор Рабина" Height="600" Width="800"
+        ResizeMode="CanResize" MinWidth="600" MinHeight="500">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Режим -->
+        <GroupBox Grid.Row="0" Header="Режим работы" Margin="0,0,0,6">
+            <StackPanel Orientation="Horizontal" Margin="4">
+                <RadioButton x:Name="rbEncrypt" Content="Шифрование" IsChecked="True"
+                             Checked="ModeChanged" Margin="0,0,20,0"/>
+                <RadioButton x:Name="rbDecrypt" Content="Дешифрование"
+                             Checked="ModeChanged"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Параметры -->
+        <GroupBox Grid.Row="1" Header="Параметры алгоритма Рабина" Margin="0,0,0,6">
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="p (простое, p mod 4 = 3):"
+                           VerticalAlignment="Center" Margin="0,0,4,4"/>
+                <TextBox x:Name="txtP" Grid.Row="0" Grid.Column="1"
+                         TextChanged="ParamChanged" Margin="0,0,0,4"
+                         ToolTip="Простое число, остаток от деления на 4 равен 3. Например: 5003"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="q (простое, q mod 4 = 3):"
+                           VerticalAlignment="Center" Margin="0,0,4,4"/>
+                <TextBox x:Name="txtQ" Grid.Row="0" Grid.Column="4"
+                         TextChanged="ParamChanged" Margin="0,0,0,4"
+                         ToolTip="Простое число, остаток от деления на 4 равен 3. Например: 5227"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="6" Text="n = p * q:"
+                           VerticalAlignment="Center" Margin="0,0,4,4"/>
+                <TextBox x:Name="txtN" Grid.Row="0" Grid.Column="7"
+                         IsReadOnly="True" Background="#F0F0F0" Margin="0,0,0,4"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="9" Text="b (0 &lt; b &lt; n):"
+                           VerticalAlignment="Center" Margin="0,0,4,4"/>
+                <TextBox x:Name="txtB" Grid.Row="0" Grid.Column="10"
+                         TextChanged="ParamChanged" Margin="0,0,0,4"
+                         ToolTip="Случайное число, меньше n. Рекомендуется b &lt; 10533"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11"
+                           Text="Рекомендуется: p, q > 3511 и b &lt; 10533 для однозначной расшифровки"
+                           Foreground="Gray" FontSize="11"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Файл и кнопки -->
+        <GroupBox Grid.Row="2" Header="Файл" Margin="0,0,0,6">
+            <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="txtStatus" Grid.Column="0"
+                           Text="Файл не выбран" Foreground="Gray"
+                           VerticalAlignment="Center"/>
+                <Button x:Name="btnOpenFile" Grid.Column="1" Content="Открыть файл"
+                        Click="BtnOpenFile_Click" Padding="10,4" Margin="6,0,6,0"/>
+                <Button x:Name="btnProcess" Grid.Column="2" Content="Выполнить"
+                        Click="BtnProcess_Click" IsEnabled="False" Padding="10,4"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Текстовые поля -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Header="Исходный файл / Шифртекст (байты в dec)">
+                <TextBox x:Name="memoSource" IsReadOnly="True"
+                         TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         FontFamily="Courier New" FontSize="12"
+                         Background="#FAFAFA"/>
+            </GroupBox>
+
+            <GroupBox Grid.Column="2">
+                <GroupBox.Header>
+                    <TextBlock x:Name="lblResult" Text="Результат (байты в dec)"/>
+                </GroupBox.Header>
+                <TextBox x:Name="memoResult" IsReadOnly="True"
+                         TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         FontFamily="Courier New" FontSize="12"
+                         Background="#FAFAFA"/>
+            </GroupBox>
+        </Grid>
+
+        <!-- Статусная строка -->
+        <StatusBar Grid.Row="4" Margin="0,4,0,0">
+            <TextBlock x:Name="txtError" Foreground="Red"/>
+            <Separator/>
+            <TextBlock x:Name="txtInfo"
+                       Text="Ko = (n, b) — открытый ключ  |  Kc = (p, q) — закрытый ключ  |  c = m*(m+b) mod n"
+                       Foreground="Gray" FontSize="11"/>
+        </StatusBar>
+    </Grid>
+</Window>

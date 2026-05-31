@@ -1,0 +1,14 @@
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\bin\Debug\RabinCryptoApp.exe.config
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\bin\Debug\RabinCryptoApp.exe
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\bin\Debug\RabinCryptoApp.pdb
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.csproj.AssemblyReference.cache
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\MainWindow.baml
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\MainWindow.g.cs
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\App.g.cs
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp_MarkupCompile.cache
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.g.resources
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RsaCryptoApp.Properties.Resources.resources
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.csproj.GenerateResource.cache
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.csproj.CoreCompileInputs.cache
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.exe
+C:\Users\Danila\Downloads\RabinCryptoApp_Variant3\RabinCryptoApp\obj\Debug\RabinCryptoApp.pdb
